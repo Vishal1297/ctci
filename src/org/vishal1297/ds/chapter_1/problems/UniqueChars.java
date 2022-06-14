@@ -1,7 +1,5 @@
 package org.vishal1297.ds.chapter_1.problems;
 
-import java.util.HashSet;
-
 /**
  * Check if string has unique characters
  */
