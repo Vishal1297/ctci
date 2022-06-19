@@ -29,15 +29,6 @@ public class ReplaceSpaces {
         }
     }
 
-    public static int findLastCharacter(char[] str) {
-        for (int i = str.length - 1; i >= 0; i--) {
-            if (str[i] != ' ') {
-                return i;
-            }
-        }
-        return -1;
-    }
-
 //    public static String replaceSpaces(String str) {
 //        return str.trim().replace(" ", "%20");
 //    }
