@@ -10,7 +10,7 @@ public class Partition {
         while (leftPtr != null) {
             if (leftPtr.getData() >= partition) {
                 leftPtr = leftPtr.getNext();
-            } else if (leftPtr.getData() <= partition) {
+            } else if (leftPtr.getData() < partition) {
                 Integer temp = leftPtr.getData();
                 leftPtr.setData(rightPtr.getData());
                 rightPtr.setData(temp);
