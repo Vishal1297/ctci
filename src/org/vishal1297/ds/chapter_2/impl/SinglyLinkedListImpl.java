@@ -1,6 +1,7 @@
 package org.vishal1297.ds.chapter_2.impl;
 
-import org.vishal1297.ds.chapter_2.problems.RemoveDuplicatesInLinkedList;
+import org.vishal1297.ds.chapter_2.problems.Intersection;
+import org.vishal1297.ds.chapter_2.problems.Palindrome;
 
 public class SinglyLinkedListImpl<T extends Comparable<T>> {
 
@@ -149,7 +150,6 @@ public class SinglyLinkedListImpl<T extends Comparable<T>> {
         linkedList.add(21);
         System.out.println("LinkedList :");
         linkedList.print();
-        RemoveDuplicatesInLinkedList.removeDuplicatesWithBuffer(linkedList.getHead());
         System.out.println("LinkedList :");
         linkedList.print();
     }
