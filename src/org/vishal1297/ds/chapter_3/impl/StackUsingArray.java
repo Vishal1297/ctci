@@ -5,9 +5,9 @@ import java.util.Objects;
 public class StackUsingArray {
 
     private static final Integer INITIAL_SIZE = 10;
-    private Integer size;
+    private final Integer size;
     private Integer current = 0;
-    private Object[] stack;
+    private final Object[] stack;
 
     public StackUsingArray() {
         this.size = INITIAL_SIZE;
@@ -15,15 +15,17 @@ public class StackUsingArray {
     }
 
     public StackUsingArray(Integer size) {
-        this.size = size;
+        if (size < 1) this.size = INITIAL_SIZE;
+        else this.size = size;
         this.stack = new Object[size];
     }
 
-    public void push(Object element) {
-        if (Objects.equals(this.size, current)) throw new IllegalStateException("Stack overflow.");
+    public Boolean push(Object element) {
+        if (this.size <= current) throw new IllegalStateException("Stack overflow.");
         System.out.println("Insert : " + element);
         stack[current] = element;
         current++;
+        return true;
     }
 
     public Object pop() {
@@ -39,6 +41,14 @@ public class StackUsingArray {
         return stack[current - 1];
     }
 
+    public Integer getSize() {
+        return size;
+    }
+
+    public Integer getCurrentSize() {
+        return current;
+    }
+
     public void print() {
         System.out.println("\nStack elements : ");
         for (int index = 0; index < current; index++)
@@ -47,8 +57,9 @@ public class StackUsingArray {
     }
 
     public static void main(String[] args) {
-        StackUsingArray stackImpl = new StackUsingArray(10);
+        StackUsingArray stackImpl = new StackUsingArray(8);
         stackImpl.push(10);
+        System.out.println("Size : " + stackImpl.getSize());
         stackImpl.push(20);
         stackImpl.push(30);
         System.out.println("Peek : " + stackImpl.peek());
