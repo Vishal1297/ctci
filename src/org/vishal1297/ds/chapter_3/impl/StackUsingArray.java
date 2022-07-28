@@ -1,7 +1,5 @@
 package org.vishal1297.ds.chapter_3.impl;
 
-import java.util.Objects;
-
 public class StackUsingArray {
 
     private static final Integer INITIAL_SIZE = 10;
@@ -17,7 +15,7 @@ public class StackUsingArray {
     public StackUsingArray(Integer size) {
         if (size < 1) this.size = INITIAL_SIZE;
         else this.size = size;
-        this.stack = new Object[size];
+        this.stack = new Object[this.size];
     }
 
     public Boolean push(Object element) {
