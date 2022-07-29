@@ -9,7 +9,6 @@ public class KStacksUsingArray<T extends Comparable<T>> {
     private final Integer size;
     private final Integer totalStacks;
 
-    private Object[] lastElements;
     private static final Integer INITIAL_SIZE = 10;
     private static final Integer INITIAL_STACK_COUNT = 5;
 
@@ -18,7 +17,6 @@ public class KStacksUsingArray<T extends Comparable<T>> {
         this.totalStacks = INITIAL_STACK_COUNT;
         this.stacks = new StackNode[this.size];
         this.stackPointers = new int[this.size];
-        this.lastElements = new Object[this.size];
     }
 
     public KStacksUsingArray(Integer stacks, Integer size) {
@@ -28,28 +26,21 @@ public class KStacksUsingArray<T extends Comparable<T>> {
         else this.totalStacks = stacks;
         this.stacks = new StackNode[this.size];
         this.stackPointers = new int[this.size];
-        this.lastElements = new Object[this.size];
     }
 
     public void push(Integer stackNumber, T data) {
         if (stackNumber < 1 || stackNumber > this.totalStacks)
             throw new IllegalArgumentException("Invalid stack number : " + stackNumber);
         if (stackPointers[stackNumber - 1] > INITIAL_SIZE) throw new IllegalStateException("Stack overflow.");
-        if (stacks[stackNumber - 1] == null) {
-            stacks[stackNumber - 1] = new StackNode<T>(data);
-        }else {
-            pushToStack(data, stackNumber);
-        }
-        lastElements[stackNumber - 1] = data;
-        stackPointers[stackNumber - 1] += 1;
+        pushToStack(data, stackNumber);
     }
 
     private void pushToStack(T data, Integer stackNumber) {
-        StackNode temp = stacks[stackNumber - 1];
-        while (temp != null && temp.getNext() != null) {
-            temp = temp.getNext();
-        }
-        temp.setNext(new StackNode<>(data));
+        StackNode top = stacks[stackNumber - 1];
+        StackNode<T> node = new StackNode<>(data);
+        node.setNext(top);
+        stacks[stackNumber - 1] = node;
+        stackPointers[stackNumber - 1] += 1;
     }
 
     public Object pop(Integer stackNumber) {
@@ -57,25 +48,15 @@ public class KStacksUsingArray<T extends Comparable<T>> {
             throw new IllegalArgumentException("Invalid stack number : " + stackNumber);
         if (stackPointers[stackNumber - 1] <= 0) throw new IllegalStateException("Stack underflow.");
         if (stacks[stackNumber - 1] == null) throw new IllegalStateException("Stack is empty.");
-        Object popped = popFromStack(stackNumber);
-        lastElements[stackNumber - 1] = null;
-        stackPointers[stackNumber - 1] -= 1;
-        return popped;
+        return popFromStack(stackNumber);
     }
 
     private Object popFromStack(Integer stackNumber) {
         StackNode temp = stacks[stackNumber - 1];
-        while (temp != null && temp.getNext() != null && temp.getNext().getNext() != null) {
-            temp = temp.getNext();
-        }
-        Object popped;
-        if (temp.getNext() == null) {
-            popped = temp.getData();
-            temp.setData(null);
-        }else {
-            popped = temp.getNext().getData();
-            temp.setNext(null);
-        }
+        Object popped = temp.getData();
+        temp.setData(null);
+        stacks[stackNumber - 1] = temp.getNext();
+        stackPointers[stackNumber - 1] -= 1;
         return popped;
     }
 
@@ -83,11 +64,7 @@ public class KStacksUsingArray<T extends Comparable<T>> {
         if (stackNumber < 1 || stackNumber > this.totalStacks)
             throw new IllegalArgumentException("Invalid stack number : " + stackNumber);
         if (stackPointers[stackNumber - 1] > INITIAL_SIZE) throw new IllegalStateException("Stack overflow.");
-        if (lastElements[stackNumber - 1] == null) {
-            throw new IllegalStateException("Stack is empty.");
-        }else {
-            return lastElements[stackNumber - 1];
-        }
+        return stacks[stackNumber - 1].getData();
     }
 
     public void print(Integer stackNumber){
