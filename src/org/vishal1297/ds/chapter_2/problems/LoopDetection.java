@@ -42,15 +42,13 @@ public class LoopDetection {
         if (head == null) return null;
         Node<Integer> slowPtr = head;
         Node<Integer> fastPtr = head;
-        boolean hasLoop = false;
         while (slowPtr != null && fastPtr != null && fastPtr.getNext() != null) {
-            if (head != slowPtr && slowPtr == fastPtr) {
-                hasLoop = true;
-                break;
-            }
             slowPtr = slowPtr.getNext();
             fastPtr = fastPtr.getNext().getNext();
+            if (slowPtr == fastPtr) {
+                return slowPtr;
+            }
         }
-        return hasLoop ? slowPtr : null;
+        return null;
     }
 }
