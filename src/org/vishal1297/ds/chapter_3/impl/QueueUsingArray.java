@@ -58,6 +58,10 @@ public class QueueUsingArray {
         return this.current;
     }
 
+    public int getMaxSize() {
+        return this.size;
+    }
+
     public static void main(String[] args) {
         QueueUsingArray qImpl = new QueueUsingArray(5);
         qImpl.enQueue(2);
