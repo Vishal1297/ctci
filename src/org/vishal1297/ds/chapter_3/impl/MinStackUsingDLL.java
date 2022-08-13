@@ -55,7 +55,7 @@ public class MinStackUsingDLL {
     public int pop() {
         int data = -1;
         if (size == 0) {
-            throw new IllegalStateException("Stack is emtpy.");
+            throw new IllegalStateException("Stack is empty.");
         } else {
             if (size == 1) {
                 head = null;
