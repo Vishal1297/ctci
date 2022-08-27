@@ -1,8 +1,5 @@
 package org.vishal1297.ds.chapter_2.impl;
 
-import org.vishal1297.ds.chapter_2.problems.Intersection;
-import org.vishal1297.ds.chapter_2.problems.Palindrome;
-
 public class SinglyLinkedListImpl<T extends Comparable<T>> {
 
     private Node<T> head;
