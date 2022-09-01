@@ -32,7 +32,7 @@ public class BSTImpl<T extends Comparable<T>> {
 
     /**
      * Pre Order Traversal
-     *
+     * <p>
      * ORDER - Left, Root, Right
      */
     public void preOrder() {
@@ -50,7 +50,7 @@ public class BSTImpl<T extends Comparable<T>> {
 
     /**
      * Inorder Traversal
-     *
+     * <p>
      * ORDER - Root, Left, Right
      */
     public void inOrder() {
@@ -68,7 +68,7 @@ public class BSTImpl<T extends Comparable<T>> {
 
     /**
      * Postorder Traversal
-     *
+     * <p>
      * ORDER - Left, Right, Root
      */
     public void postOrder() {
@@ -89,6 +89,15 @@ public class BSTImpl<T extends Comparable<T>> {
         return node.data;
     }
 
+    public T max() {
+        return findMax(this.root);
+    }
+
+    private T findMin(TreeNode<T> node) {
+        while (node.left != null) node = node.left;
+        return node.data;
+    }
+
     public boolean contains(T data) {
         return contains(this.root, data);
     }
@@ -98,6 +107,33 @@ public class BSTImpl<T extends Comparable<T>> {
         else if (data.compareTo(root.data) < 0) return contains(root.left, data);
         else if (data.compareTo(root.data) > 0) return contains(root.right, data);
         else return true;
+    }
+
+    public void delete(T data) {
+        this.root = delete(this.root, data);
+    }
+
+    private TreeNode<T> delete(TreeNode<T> node, T data) {
+        if (node == null) return null;
+        else if (data.compareTo(node.data) < 0) {
+            node.left = delete(node.left, data);
+        } else if (data.compareTo(node.data) > 0) {
+            node.right = delete(node.right, data);
+        } else {
+            {
+                if (node.left == null && node.right == null) {
+                    return null;
+                } else if (node.left == null) {
+                    return node.right;
+                } else if (node.right == null) {
+                    return node.left;
+                } else {
+                    node.data = findMax(node.left);
+                    node.left = delete(node.left, node.data);
+                }
+            }
+        }
+        return node;
     }
 
     public static void main(String[] args) {
@@ -112,11 +148,10 @@ public class BSTImpl<T extends Comparable<T>> {
         if (bst.contains(74)) {
             System.out.println("Contains 74");
         }
-        // TODO: Impl delete
-//        bst.delete(74);
-//        if (bst.contains(74)) {
-//            System.out.println("Contains 74");
-//        }
+        bst.delete(74);
+        if (bst.contains(74)) {
+            System.out.println("Contains 74");
+        }
         bst.preOrder();
         bst.inOrder();
         bst.postOrder();
