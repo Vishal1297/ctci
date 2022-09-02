@@ -36,7 +36,7 @@ public class BSTImpl<T extends Comparable<T>> {
      * ORDER - Left, Root, Right
      */
     public void preOrder() {
-        System.out.print("Pre-order Traversal :");
+        System.out.println("\nPre-order Traversal :");
         preOrder(this.root);
         System.out.println();
     }
@@ -54,7 +54,7 @@ public class BSTImpl<T extends Comparable<T>> {
      * ORDER - Root, Left, Right
      */
     public void inOrder() {
-        System.out.print("In-order Traversal :");
+        System.out.println("\nIn-order Traversal :");
         inOrder(this.root);
         System.out.println();
     }
@@ -72,7 +72,7 @@ public class BSTImpl<T extends Comparable<T>> {
      * ORDER - Left, Right, Root
      */
     public void postOrder() {
-        System.out.print("Post-order Traversal :");
+        System.out.println("\nPost-order Traversal :");
         postOrder(this.root);
         System.out.println();
     }
@@ -136,6 +136,43 @@ public class BSTImpl<T extends Comparable<T>> {
         return node;
     }
 
+    public int getHeight() {
+        return getHeight(this.root);
+    }
+
+    public int getHeight(TreeNode<T> node) {
+        if (node == null) return 0;
+        else {
+            int lHeight = getHeight(node.left);
+            int rHeight = getHeight(node.right);
+
+            if (lHeight > rHeight) {
+                return (lHeight + 1);
+            }else {
+                return (rHeight + 1);
+            }
+        }
+    }
+
+    public void levelOrder() {
+        System.out.println("\nLevel-order Traversal :");
+        int height = getHeight(this.root);
+        for (int i = 1; i <= height; i++) {
+            printLevelOrder(this.root, i);
+        }
+    }
+
+    public void printLevelOrder(TreeNode<T> node, int level) {
+        if (node != null){
+            if (level == 1) {
+                System.out.print(node.data + " ");
+            }else if (level > 1){
+                printLevelOrder(node.left, level - 1);
+                printLevelOrder(node.right, level - 1);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         BSTImpl<Integer> bst = new BSTImpl<>();
         System.out.println("Binary tree operations :");
@@ -152,11 +189,16 @@ public class BSTImpl<T extends Comparable<T>> {
         if (bst.contains(74)) {
             System.out.println("Contains 74");
         }
+
+        System.out.println("Height : " + bst.getHeight());
+
         bst.preOrder();
         bst.inOrder();
         bst.postOrder();
+        bst.levelOrder();
 
-        System.out.println("Max : " + bst.findMax(bst.getRoot()));
+        System.out.println("\n\nMax : " + bst.findMax(bst.getRoot()));
+        System.out.println("\nMin : " + bst.findMin(bst.getRoot()));
     }
 
     static class TreeNode<T extends Comparable<T>> {
