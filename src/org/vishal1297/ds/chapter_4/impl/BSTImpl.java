@@ -9,7 +9,7 @@ public class BSTImpl<T extends Comparable<T>> {
     }
 
     public BSTImpl(T data) {
-        this.root = new TreeNode<T>(data);
+        this.root = new TreeNode<>(data);
     }
 
     public TreeNode<T> getRoot() {
@@ -145,12 +145,7 @@ public class BSTImpl<T extends Comparable<T>> {
         else {
             int lHeight = getHeight(node.left);
             int rHeight = getHeight(node.right);
-
-            if (lHeight > rHeight) {
-                return (lHeight + 1);
-            }else {
-                return (rHeight + 1);
-            }
+            return Math.max(lHeight, rHeight) + 1;
         }
     }
 
@@ -173,10 +168,27 @@ public class BSTImpl<T extends Comparable<T>> {
         }
     }
 
+    private int diameter(TreeNode<T> node) {
+        int[] diameter = new int[1];
+        int height = diameter(this.root, diameter);
+        return diameter[0];
+    }
+
+    private int diameter(TreeNode<T> node, int[] diameter) {
+        if (node == null) {
+            return 0;
+        } else {
+            int lHeight = diameter(node.left, diameter);
+            int rHeight = diameter(node.right, diameter);
+            diameter[0] = Math.max(diameter[0], lHeight + rHeight + 1);
+            return Math.max(lHeight , rHeight) + 1;
+        }
+    }
+
     public static void main(String[] args) {
         BSTImpl<Integer> bst = new BSTImpl<>();
         System.out.println("Binary tree operations :");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             int r = (int) (Math.random() * 100) + 1;
             System.out.println("Inserting : " + r + "...");
             bst.insert(r);
@@ -199,6 +211,7 @@ public class BSTImpl<T extends Comparable<T>> {
 
         System.out.println("\n\nMax : " + bst.findMax(bst.getRoot()));
         System.out.println("\nMin : " + bst.findMin(bst.getRoot()));
+        System.out.println("\nDiameter/Width : " + bst.diameter(bst.getRoot()));
     }
 
     static class TreeNode<T extends Comparable<T>> {
