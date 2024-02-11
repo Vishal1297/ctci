@@ -116,6 +116,7 @@ public class ArrayListImpl<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new IllegalStateException();
                 }
+                // TODO: Remove element from list
             }
         };
     }
@@ -140,8 +141,7 @@ public class ArrayListImpl<T> implements Iterable<T> {
         while (iterator.hasNext()) {
             String curr = iterator.next();
             if (curr.equalsIgnoreCase("d")) {
-                // TODO: Implement remove()
-                //iterator.remove();
+                iterator.remove();
             }
             System.out.print(curr + " ");
         }
