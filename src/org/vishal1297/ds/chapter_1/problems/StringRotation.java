@@ -7,7 +7,7 @@ public class StringRotation {
     }
 
     public static boolean isRotation(String s1, String s2) {
-        if (s1.length() == 0 || s1.length() != s2.length()) return false;
+        if (s1.isEmpty() || s1.length() != s2.length()) return false;
         return isSubstring(s1 + s1, s2);
     }
 
