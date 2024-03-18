@@ -19,9 +19,9 @@ public class OneAway {
         if (l1 == l2) {
             return oneEditReplace(str1, str2);
         } else if (l1 + 1 == l2) {
-            return oneEditInsert(str1, str2);
+            return oneEditInsert(str1, str2, false);
         } else if (l1 - 1 == l2) {
-            return oneEditInsert(str1, str2);
+            return oneEditInsert(str1, str2, true);
         }
         return false;
     }
@@ -39,19 +39,27 @@ public class OneAway {
         return true;
     }
 
-    public static boolean oneEditInsert(String str1, String str2) {
+    public static boolean oneEditInsert(String str1, String str2, boolean incIndex1) {
         int index1 = 0, index2 = 0;
         while (index1 < str1.length() && index2 < str2.length()) {
             if (str1.charAt(index1) != str2.charAt(index2)) {
                 if (index1 != index2) {
                     return false;
                 }
+                if(incIndex1){
+                    index1++;
+                }else {
+                    index2++;
+                }
             } else {
                 index1++;
+                index2++;
             }
-            index2++;
         }
         return true;
     }
+
+    // S2 - Combine all cases insert, delete & replace
+
 
 }
